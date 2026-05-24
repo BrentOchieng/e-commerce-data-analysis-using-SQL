@@ -16,37 +16,43 @@ tables= run_query("""
 SHOW tables
 """)
 tables
-1. Find all customers from Kenya
+
+#1. Find all customers from Kenya
 kenya_customers=run_query("""
 SELECT * FROM customers
 WHERE country = 'Kenya'
 limit 10;                                               
                           """)
 kenya_customers
-2. Count total orders
+
+#2. Count total orders
 count_total_orders=run_query("""
 select COUNT(*) 
 as total_orders 
 from orders;                             """)
 count_total_orders
-3. Find all cancelled orders
+
+#3. Find all cancelled orders
 cancelled_orders=run_query("""
 select * from orders
 where status='Cancelled';                           """)
 cancelled_orders
-4. Show products costing above $500
+
+#4. Show products costing above $500
 product500=run_query("""
 select * from products
 where price > 500                     
 order by price desc
                                        ;""")
 product500
-5. Find customers who signed up in 2024
+
+#5. Find customers who signed up in 2024
 customers_2024=run_query("""
 select * from customers
 where year(signup_date)=2024;                         """)
 customers_2024
-6. Show customer names with their orders
+
+#6. Show customer names with their orders
 customers_names=run_query("""
 SELECT 
     o.order_id,
@@ -57,11 +63,13 @@ FROM orders o
 JOIN customers c
 ON o.customer_id = c.customer_id;                          """)
 customers_names
-7. Calculate total revenue
+
+#7. Calculate total revenue
 total_revenue=run_query("""
 select sum(amount) as total_revenue from payments;                        """)
 total_revenue
-8. Revenue generated per country
+
+#8. Revenue generated per country
 revenue_per_country=run_query("""
 SELECT 
     c.country,
@@ -74,7 +82,8 @@ ON o.order_id = p.order_id
 GROUP BY c.country
 ORDER BY revenue DESC;                            """)
 revenue_per_country
-9. Top 10 highest spending customers
+
+#9. Top 10 highest spending customers
 top_10_spending=run_query("""
 SELECT 
     c.full_name,
@@ -100,7 +109,8 @@ ORDER BY total_spent DESC
 LIMIT 10;
                           """)
 top_10_spending
-11. Customers who never placed an order
+
+#11. Customers who never placed an order
 customers_with_no_order=run_query("""
 SELECT c.*
 FROM customers c
@@ -108,7 +118,8 @@ LEFT JOIN orders o
 ON c.customer_id = o.customer_id
 WHERE o.order_id IS NULL;                                  """)
 customers_with_no_order
-12. Orders without payments
+
+#12. Orders without payments
 unpaid_orders=run_query("""
 select o.order_id, o.status,p.amount from ecommerce_10k.orders
 as o
@@ -117,11 +128,13 @@ on o.order_id=p.order_id
 where amount = 0;
                         """)
 unpaid_orders
-13. Average order value
+
+#13. Average order value
 average_order_value=run_query("""
 select avg(amount) as average_order_value from ecommerce_10k.payments;      """)
 average_order_value
-14. Profit generated per product
+
+#14. Profit generated per product
 profit_per_product=run_query("""
 SELECT 
     p.brand,
@@ -133,7 +146,8 @@ JOIN ecommerce_10k.payments AS pa
 ON pa.order_id = oi.order_id
 GROUP BY p.brand;""")
 profit_per_product
-15. Customers spending above average
+
+#15. Customers spending above average
 spending_above_average=run_query("""
 SELECT 
     t.customer_id,
@@ -160,7 +174,8 @@ WHERE t.total_spent > (
     ) x
 );                                 """)
 spending_above_average
-16. Find products with above-average prices
+
+#16. Find products with above-average prices
 above_average_products=run_query("""
 SELECT *
 FROM products
@@ -169,7 +184,8 @@ WHERE price > (
     FROM products
 );                                 """)
 above_average_products
-17. Rank customers by spending- use windows function
+
+#17. Rank customers by spending- use windows function
 spending_rank=run_query("""
 SELECT 
     c.customer_id,
@@ -183,7 +199,8 @@ JOIN payments p
 ON o.order_id = p.order_id
 GROUP BY c.customer_id, c.full_name;                        """)
 spending_rank
-18. Running total of revenue over time
+
+#18. Running total of revenue over time
 total_revenue_over_time=run_query("""
 SELECT 
     payment_date,
@@ -193,7 +210,8 @@ SELECT
     ) AS running_revenue
 FROM payments;                                """)
 total_revenue_over_time
-19. Previous order date per customer
+
+#19. Previous order date per customer
 previous_order_date=run_query("""
 SELECT 
     customer_id,
@@ -204,7 +222,8 @@ SELECT
     ) AS previous_order_date
 FROM orders;                             """)
 previous_order_date
-20. Monthly revenue trend + growth rate
+
+#20. Monthly revenue trend + growth rate
 monthly_revenue=run_query("""
 SELECT 
     month,
